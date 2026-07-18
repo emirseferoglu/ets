@@ -358,6 +358,14 @@ class EtsyClient:
         )
         return page.get("results", [])
 
+    def get_listing(self, listing_id: int) -> dict[str, Any]:
+        """Herhangi bir (kendi ya da rakip) ilanı public endpoint'ten çeker.
+        Shop-scope gerekmez — findListing tüm aktif ilanlar için açık."""
+        return self._request(
+            "GET", f"/listings/{listing_id}",
+            params={"includes": "Tags,Images,Shop"},
+        )
+
 
 def _redact(value: str) -> str:
     """Bir secret'ı loglanabilir hale getir (tamamını asla gösterme)."""

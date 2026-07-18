@@ -6,6 +6,10 @@ Komutlar (sabah digest'indeki numaralarla):
   "poster 3"    → 3 numaralı adayı poster olarak üretir
   "liste"       → güncel aday listesini tekrar gönderir
 
+Komut (keyfi bir Etsy linki/ID'si — digest'te olması gerekmez):
+  "kopyala <link veya id>"          → TV art olarak taklit üretir
+  "kopyala poster <link veya id>"   → poster olarak taklit üretir
+
 Kurulum:
   * Twilio Console → WhatsApp Sandbox → "WHEN A MESSAGE COMES IN":
       http://<droplet-ip>:8090/whatsapp   (POST)
@@ -58,6 +62,16 @@ def _spawn(listing_id: int, mode: str) -> None:
             cwd=str(ROOT), stdout=f, stderr=f)
 
 
+def _spawn_replicate(listing_id: int, mode: str) -> None:
+    LOG.parent.mkdir(exist_ok=True)
+    with open(LOG, "a") as f:
+        subprocess.Popen(
+            [str(ROOT / ".venv" / "bin" / "python"),
+             str(ROOT / "replicate_listing.py"),
+             "--id", str(listing_id), "--mode", mode],
+            cwd=str(ROOT), stdout=f, stderr=f)
+
+
 @app.route("/whatsapp", methods=["POST"])
 def whatsapp():
     frm = request.form.get("From", "")
@@ -66,6 +80,20 @@ def whatsapp():
         return _twiml("Yetkisiz numara.")
 
     m = _digest_map()
+
+    if body.startswith("kopyala"):
+        from replicate_listing import _extract_id
+
+        rest = body[len("kopyala"):].strip()
+        mode = "poster" if rest.startswith("poster") else "tv"
+        if mode == "poster":
+            rest = rest[len("poster"):].strip()
+        try:
+            lid = _extract_id(rest)
+        except SystemExit:
+            return _twiml("Link veya listing ID belirt: 'kopyala <link>' / 'kopyala poster <id>'")
+        _spawn_replicate(lid, mode)
+        return _twiml(f"🚀 Taklit üretimi başladı ({mode}, {lid}). Bitince draft linki gelecek.")
 
     if body.startswith("liste"):
         try:
