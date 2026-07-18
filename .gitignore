@@ -1,0 +1,23 @@
+# --- secrets (ASLA commitlenmez) ---
+.env
+.tokens.json
+
+# --- python ---
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# --- veri & cache (opsiyonel; ham veri repoya girmesin) ---
+data/
+reports/
+!data/.gitkeep
+!reports/.gitkeep
+
+# --- üretilen görseller (regenerable, repoyu şişirmesin) ---
+output/
+logs/
+
+# --- os ---
+.DS_Store
+*.log

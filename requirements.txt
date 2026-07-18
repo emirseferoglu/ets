@@ -1,0 +1,6 @@
+requests>=2.31
+python-dotenv>=1.0
+pandas>=2.0
+pillow>=10.0
+fal-client>=0.4
+openai>=1.40
