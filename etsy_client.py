@@ -350,6 +350,14 @@ class EtsyClient:
             files=files,
         )
 
+    def delete_listing_image(self, listing_id: int, listing_image_id: int) -> None:
+        """Bir ilan görselini siler. YAZMA — listings_w gerekir."""
+        shop_id = self.resolve_shop_id()
+        self._send(
+            "DELETE",
+            f"/shops/{shop_id}/listings/{listing_id}/images/{listing_image_id}",
+        )
+
     def get_listing_images(self, listing_id: int) -> list[dict[str, Any]]:
         """Bir ilanın görsellerini döndürür."""
         shop_id = self.resolve_shop_id()
