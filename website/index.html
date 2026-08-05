@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Faizsiz ev ve araç finansmanı hesaplama aracı. Tasarruf finansmanı taksit, organizasyon ücreti ve teslim süresini anında hesaplayın, BDDK lisanslı firma tekliflerini karşılaştırın." />
+  <title>Tasarruf Finansmanı Hesaplama | Faizsiz Ev & Araç Teklifleri Karşılaştır</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">Tasarruf<span>Finansmanı</span></a>
+      <nav class="nav">
+        <a href="#nasil-calisir">Nasıl Çalışır</a>
+        <a href="#calculator-section">Hesaplama</a>
+        <a href="#karsilastir">Karşılaştır</a>
+        <a href="#sss">S.S.S.</a>
+      </nav>
+      <a href="#calculator-section" class="btn btn-primary btn-sm">Hemen Hesapla</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <span class="badge">Faizsiz · Peşinatsız Seçenekler</span>
+        <h1>Faizsiz ev ve araç finansmanınızı<br /><em>saniyeler içinde</em> hesaplayın</h1>
+        <p>Aylık taksitinizi, organizasyon ücretinizi ve tahmini teslim ayınızı öğrenin.
+        BDDK lisanslı tasarruf finansmanı firmalarının tekliflerini yan yana karşılaştırın.</p>
+        <a href="#calculator-section" class="btn btn-primary">Maliyetimi Hesapla</a>
+        <ul class="hero-facts">
+          <li><strong>%0</strong> Faiz</li>
+          <li><strong>6+ ay</strong> Teslim</li>
+          <li><strong>BDDK</strong> Lisanslı</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CALCULATOR ============ -->
+  <section id="calculator-section" class="calculator-section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Tasarruf Finansmanı Hesaplama</h2>
+        <p>Bilgilerinizi girin; taksit, organizasyon ücreti ve teslim tahmini anında gelsin.</p>
+      </div>
+
+      <div class="calc-grid">
+        <!-- Inputs -->
+        <form class="calc-form" id="calcForm" novalidate>
+          <div class="field">
+            <label>Ürün Tipi</label>
+            <div class="segmented" id="productType">
+              <button type="button" class="seg active" data-value="ev">🏠 Ev</button>
+              <button type="button" class="seg" data-value="araba">🚗 Araba</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="amount">Finansman Tutarı (₺)</label>
+            <input type="text" id="amount" inputmode="numeric" value="1.500.000" />
+            <input type="range" id="amountRange" min="100000" max="10000000" step="50000" value="1500000" />
+          </div>
+
+          <div class="field">
+            <label for="term">Vade (Ay)</label>
+            <input type="range" id="term" min="12" max="120" step="12" value="60" />
+            <output id="termOut">60 ay</output>
+          </div>
+
+          <div class="field">
+            <label for="downPayment">Peşinat / Ön Ödeme (₺)</label>
+            <input type="text" id="downPayment" inputmode="numeric" value="0" />
+          </div>
+
+          <div class="field">
+            <label>Teslim Modeli</label>
+            <div class="segmented" id="drawType">
+              <button type="button" class="seg active" data-value="cekilissiz">Çekilişsiz</button>
+              <button type="button" class="seg" data-value="cekilisli">Çekilişli</button>
+            </div>
+            <small class="hint" id="drawHint">Birikiminiz sözleşmenin %40'ına ulaştığında teslim alırsınız.</small>
+          </div>
+
+          <div class="field">
+            <label for="orgFee">Organizasyon Ücreti Oranı: <b id="orgFeeOut">%8</b></label>
+            <input type="range" id="orgFee" min="4" max="10" step="0.5" value="8" />
+          </div>
+        </form>
+
+        <!-- Results -->
+        <div class="calc-results" id="calcResults">
+          <div class="result-hero">
+            <span class="result-label">Tahmini Aylık Taksit</span>
+            <span class="result-value" id="rMonthly">—</span>
+          </div>
+          <div class="result-rows">
+            <div class="rrow"><span>Organizasyon Ücreti</span><b id="rOrgFee">—</b></div>
+            <div class="rrow"><span>Toplam Ödenecek</span><b id="rTotal">—</b></div>
+            <div class="rrow"><span>Tahmini Teslim Ayı</span><b id="rDelivery">—</b></div>
+            <div class="rrow"><span>Efektif Maliyet Oranı</span><b id="rEffective">—</b></div>
+          </div>
+          <p class="result-note" id="rNote"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPARISON ============ -->
+  <section id="karsilastir" class="compare-section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Firma Tekliflerini Karşılaştır</h2>
+        <p>Girdiğiniz tutara göre BDDK lisanslı firmaların örnek maliyetleri (temsilîdir).</p>
+      </div>
+      <div class="table-wrap">
+        <table class="compare-table" id="compareTable">
+          <thead>
+            <tr>
+              <th>Firma</th>
+              <th>Org. Ücreti Oranı</th>
+              <th>Organizasyon Ücreti</th>
+              <th>Aylık Taksit</th>
+              <th>Toplam Maliyet</th>
+            </tr>
+          </thead>
+          <tbody id="compareBody"></tbody>
+        </table>
+      </div>
+      <p class="disclaimer">* Oranlar örnek amaçlıdır ve kampanyalara göre değişir. Kesin teklif için firmalarla görüşün.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section id="nasil-calisir" class="how-section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Nasıl Çalışır?</h2>
+        <p>Tasarruf finansmanı, faiz yerine organizasyon ücretiyle çalışan katılımcı bir birikim modelidir.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="step-no">1</span><h3>Plan Belirle</h3><p>Almak istediğiniz ev/araç değerini ve aylık bütçenizi netleştirin. Organizasyon ücreti bu aşamada belirlenir.</p></div>
+        <div class="step"><span class="step-no">2</span><h3>Havuza Katıl</h3><p>Benzer bütçeli katılımcılarla bir gruba dahil olursunuz; ödemeleriniz ortak finansman havuzunda toplanır.</p></div>
+        <div class="step"><span class="step-no">3</span><h3>Teslim Al</h3><p>Birikiminiz sözleşme oranına ulaştığında (veya kura çıktığında) finansmanınızı teslim alırsınız.</p></div>
+        <div class="step"><span class="step-no">4</span><h3>Taksitini Öde</h3><p>Teslimden sonra kalan vade boyunca aynı plana göre faizsiz taksitlerinizi ödemeye devam edersiniz.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="sss" class="faq-section">
+    <div class="container">
+      <div class="section-head"><h2>Sıkça Sorulan Sorular</h2></div>
+      <details><summary>Organizasyon ücreti nedir, iade edilir mi?</summary><p>Almak istediğiniz varlık bedelinin %4–8'i kadar olan hizmet ücretidir. Peşin, yarı peşin veya taksitli ödenebilir. Sözleşmeden cayılsa dahi iade edilmez.</p></details>
+      <details><summary>Teslimatı ne zaman alırım?</summary><p>Çekilişsiz modelde birikiminiz sözleşme tutarının belirli oranına (örn. %40) ulaştığında; en erken sözleşme tarihinden itibaren 180. günde (6. ay) teslim yapılabilir. Çekilişli modelde her ay kura çekilir.</p></details>
+      <details><summary>Faiz var mı?</summary><p>Hayır. Sistem faizsizdir; tek maliyet organizasyon (hizmet) ücretidir.</p></details>
+      <details><summary>Bu firmalar güvenli mi?</summary><p>Tasarruf finansman şirketleri BDDK tarafından lisanslanır ve denetlenir.</p></details>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>Tasarruf Finansmanı</strong> — Faizsiz ev & araç finansmanı hesaplama ve karşılaştırma aracı.</p>
+      <p class="disclaimer">Bu site bilgilendirme amaçlıdır, yatırım/finansman tavsiyesi değildir. Hesaplamalar tahminîdir.</p>
+    </div>
+  </footer>
+
+  <script src="assets/calculator.js"></script>
+</body>
+</html>
